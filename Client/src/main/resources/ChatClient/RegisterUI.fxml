@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="352.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChatClient.RegisterController">
+   <center>
+      <GridPane prefHeight="298.0" prefWidth="434.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.4" minWidth="10.0" prefWidth="135.9999755859375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0000244140625" minWidth="10.0" prefWidth="264.00001220703126" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.59996337890624" minWidth="10.0" prefWidth="83.99998779296874" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="116.59999771118164" minHeight="10.0" prefHeight="66.99999389648437" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="249.6" minHeight="10.0" prefHeight="55.99998168945312" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="174.99997558593753" minHeight="0.0" prefHeight="47.8" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.60001220703123" minHeight="3.8000244140624773" prefHeight="49.19999999999999" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="82.59995117187498" minHeight="10.0" prefHeight="80.39999999999998" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="82.59995117187498" minHeight="10.0" prefHeight="57.80001220703127" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ButtonBar prefHeight="74.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <buttons>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btn_register" layoutY="22.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="141.0" style="-fx-background-color: orange;" text="Register" />
+                     </children>
+                  </AnchorPane>
+               </buttons>
+            </ButtonBar>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="btn_login" layoutX="173.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="login" textFill="#1500ff" underline="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="-46.0" layoutY="15.0" text="Already signed up? Click here for ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="tf_username" layoutX="53.0" layoutY="11.0" prefHeight="26.0" prefWidth="180.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <TextField fx:id="tf_password" layoutX="54.0" layoutY="1.0" prefHeight="26.0" prefWidth="180.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <TextField fx:id="tf_passwordVri" layoutX="54.0" layoutY="-6.0" prefHeight="26.0" prefWidth="180.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label layoutX="-7.0" layoutY="14.0" text="Username:">
+                     <padding>
+                        <Insets left="80.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Label layoutX="-3.0" layoutY="6.0" text="Password:">
+                     <padding>
+                        <Insets left="85.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Label layoutX="-3.0" text="Password varification:">
+                     <padding>
+                        <Insets left="17.0" />
+                     </padding>
+                  </Label>
+               </children></AnchorPane>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>

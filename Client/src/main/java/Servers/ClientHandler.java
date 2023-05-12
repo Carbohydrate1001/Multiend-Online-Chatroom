@@ -1,5 +1,8 @@
 package Servers;
 
+import ChatClient.DataBaseUtils;
+import ChatClient.LoginController;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,6 +19,9 @@ public class ClientHandler implements Runnable{
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            clientUsername = DataBaseUtils.Username;
+            //this.clientUsername = clientUsername;
+            this.clientUsername = bufferedReader.readLine();
             clientHandlers.add(this);
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -26,9 +32,11 @@ public class ClientHandler implements Runnable{
     public void SendMessageToClient(String MessageToClient) {
         for (ClientHandler clientHandler : clientHandlers) {
             try {
-                clientHandler.bufferedWriter.write(MessageToClient);
-                clientHandler.bufferedWriter.newLine();
-                clientHandler.bufferedWriter.flush();
+                if (!clientHandler.clientUsername.equals(clientUsername)){
+                    clientHandler.bufferedWriter.write(MessageToClient);
+                    clientHandler.bufferedWriter.newLine();
+                    clientHandler.bufferedWriter.flush();
+                }
             } catch(IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
             }

@@ -41,6 +41,7 @@ public class ClientController implements Initializable {
 
     private Client client;
     private static String Username;
+    private static String Nickname;
     //private ClientHandler clientHandler;
 
 
@@ -87,11 +88,11 @@ public class ClientController implements Initializable {
         button_send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                String messageToSend = Username + ": " + tf_message.getText();
+                String messageToSend = tf_message.getText();
                 if (!messageToSend.isEmpty()) {
+                    messageToSend = Nickname + ": " + tf_message.getText();
                     HBox hBox = new HBox();
                     hBox.setAlignment(Pos.CENTER_RIGHT);
-
                     hBox.setPadding(new Insets(5,5,5,10)); //Set coordinate of the hBox
                     Text text = new Text(messageToSend); //??
                     TextFlow textFlow = new TextFlow(text); //??
@@ -118,7 +119,10 @@ public class ClientController implements Initializable {
         Username = username;
     }
 
+    public static void setNickname(String nickname) { Nickname = nickname; }
+
     public static void addLabel(String msgFromServer, VBox vbox) {
+        System.out.println(msgFromServer);
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.setPadding(new Insets(5,5,5,10));

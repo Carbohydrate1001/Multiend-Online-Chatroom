@@ -43,6 +43,7 @@ public class Client {
                 while (socket.isConnected()) {
                     try {
                         String msgFromClient = bufferedReader.readLine();
+                        //System.out.println(msgFromClient);
                         ClientController.addLabel(msgFromClient,vBox);
                     } catch (IOException e) {
                         e.printStackTrace();

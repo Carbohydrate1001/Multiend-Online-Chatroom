@@ -47,6 +47,7 @@ public class DataBaseUtils {
                 root = fxmlLoader.load();
                 ClientController clientController = fxmlLoader.getController();
                 ClientController.setUser(username);
+                //ClientController.setNickname(nickname);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -60,14 +61,15 @@ public class DataBaseUtils {
         }
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
-        stage.setScene(new Scene(root, 478, 396));
+        stage.setScene(new Scene(root, 677, 396));
         stage.show();
     }
 
-    public static void changeProfileScene(ActionEvent event, String fxmlFile) {
+    public static void changeProfileScene(ActionEvent event, String fxmlFile, String username) {
         Parent root = null;
         try {
             root = FXMLLoader.load(DataBaseUtils.class.getResource("SetProfileUI.fxml"));
+            SetProfileController.setUser(username);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,7 +115,7 @@ public class DataBaseUtils {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Registered successfully.");
                 alert.show();
-                changeChatScene(Event, "ChatView.fxml", "Chat", username);
+                changeProfileScene(Event, "SetProfileUI.fxml", username);
                 //clientHandler.SendMessageToClient("SERVER: " + username + " has entered the chat!");
             }
         } catch (SQLException e) {
@@ -150,7 +152,7 @@ public class DataBaseUtils {
         ResultSet resultSet = null;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:41001/multichatfx", "root", "ctOssystemv.3" );
-            preparedStatement = connection.prepareStatement("SELECT Password, Status FROM users WHERE Username = ?");
+            preparedStatement = connection.prepareStatement("SELECT Password, Status, Nickname FROM users WHERE Username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             if (!resultSet.isBeforeFirst()){
@@ -163,11 +165,13 @@ public class DataBaseUtils {
                 while (resultSet.next()) {
                     String retrievePassword = resultSet.getString("Password");
                     String retrieveStatus = resultSet.getString("Status");
+                    String retrieveNickname = resultSet.getString("Nickname");
                     if (retrievePassword.equals(password)) {
                         if (retrieveStatus.equals("Offline")){
                             PSUpdate = connection.prepareStatement("UPDATE users SET Status = ? WHERE Username = ?");
                             PSUpdate.setString(1, "Online");
                             PSUpdate.setString(2, username);
+                            ClientController.setNickname(retrieveNickname);
                             PSUpdate.executeUpdate();
                             changeChatScene(Event, "ChatView.fxml","Chat", username);
                             //clientHandler.SendMessageToClient("SERVER: " + username + " has entered the chat!");

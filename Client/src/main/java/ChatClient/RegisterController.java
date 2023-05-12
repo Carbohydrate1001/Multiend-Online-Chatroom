@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+//Control Register system's graphical user interface
 public class RegisterController implements Initializable {
 
     @FXML
@@ -27,10 +29,12 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //Handle the button click
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty() && !tf_passwordVri.getText().trim().isEmpty()) {
+                    //Check if all the information are filled
                     DataBaseUtils.register(actionEvent, tf_username.getText(), tf_password.getText(), tf_passwordVri.getText());
                 }
                 else {
@@ -45,6 +49,7 @@ public class RegisterController implements Initializable {
         btn_login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                //Change login&register scene by calling the function changeLRScene
                 DataBaseUtils.changeLRScene(actionEvent,"LoginUI.fxml", null, null);
             }
         });

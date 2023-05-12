@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
+//Run this class to start the server
 public class Server {
     private ServerSocket serverSocket;
     //private Socket socket;
@@ -14,6 +16,7 @@ public class Server {
         this.serverSocket = serverSocket;
     }
 
+    //Method to start the client and wait for connect
     public void StartServer() {
 
         try {
@@ -23,6 +26,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected!");
                 ClientHandler clientHandler = new ClientHandler(socket);
+                //Call the clientHandler to start another thread
                 Thread thread = new Thread(clientHandler);
                 thread.start();
             }
@@ -32,7 +36,7 @@ public class Server {
         }
     }
 
-
+    //Method to shut down the server
     public void closeServerSocket() {
         try{
             if (serverSocket != null) {
@@ -44,6 +48,7 @@ public class Server {
         }
     }
 
+    //Set the port and start server by calling methods
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(10010);
         Server server = new Server(serverSocket);

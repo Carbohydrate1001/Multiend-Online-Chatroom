@@ -42,9 +42,8 @@ public class ClientController implements Initializable {
     private Client client;
     private static String Username;
     private static String Nickname;
-    //private ClientHandler clientHandler;
 
-
+    //Control client's graphical user interface
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -64,6 +63,7 @@ public class ClientController implements Initializable {
 
         client.receiveMessageFromServer(vbox_messages);
 
+        //Handle button click to log out user
         btn_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -79,12 +79,11 @@ public class ClientController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                //clientHandler.SendMessageToClient(Username + ": has left the chatroom.");
                 DataBaseUtils.changeLRScene(actionEvent, "LoginUI.fxml", "Login", null);
             }
         });
 
-
+        //Handle the button click, send the message and create corresponding label
         button_send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

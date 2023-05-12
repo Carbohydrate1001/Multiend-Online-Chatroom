@@ -11,7 +11,7 @@ public class Client {
     private BufferedWriter bufferedWriter;
     private BufferedReader bufferedReader;
 
-
+    //Set up socket and buffer and connect to the serversocket
     public Client(Socket socket) {
         try {
             this.socket = socket;
@@ -23,6 +23,7 @@ public class Client {
         }
     }
 
+    //Handle the buffer information out
     public void sendMessageToServer(String messageToServer) {
         try {
             bufferedWriter.write(messageToServer);
@@ -35,7 +36,7 @@ public class Client {
         }
     }
 
-
+    //Handle the buffer information in
     public void receiveMessageFromServer(VBox vBox) {
         new Thread(new Runnable() {
             @Override
@@ -43,7 +44,6 @@ public class Client {
                 while (socket.isConnected()) {
                     try {
                         String msgFromClient = bufferedReader.readLine();
-                        //System.out.println(msgFromClient);
                         ClientController.addLabel(msgFromClient,vBox);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -56,6 +56,7 @@ public class Client {
         }).start();
     }
 
+    //Close everything after used to reduce occupancy
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         try {
             if (bufferedReader != null) {

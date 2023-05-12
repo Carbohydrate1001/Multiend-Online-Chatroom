@@ -14,6 +14,7 @@ public class ClientHandler implements Runnable{
     private BufferedWriter bufferedWriter;
     private String clientUsername;
 
+    //Method to handle the client, connection and buffer etc.
     public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
@@ -29,6 +30,7 @@ public class ClientHandler implements Runnable{
 
     }
 
+    //Method that write the messages into buffer and transfer them
     public void SendMessageToClient(String MessageToClient) {
         for (ClientHandler clientHandler : clientHandlers) {
             try {
@@ -43,6 +45,7 @@ public class ClientHandler implements Runnable{
         }
     }
 
+    //Send multiple messages by continuously calling the SendMessageToClient method
     @Override
     public void run() {
         String MessageToClient;
@@ -59,11 +62,13 @@ public class ClientHandler implements Runnable{
         }
     }
 
+    //This method will remove the user and issue a prompt when the user leaves the server
     public void removeClientHandler() {
         clientHandlers.remove(this);
         SendMessageToClient("SERVER: " + clientUsername + "has left the chatroom");
     }
 
+    //This method will close everything, prevent resource occupancy
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         removeClientHandler();
         try {

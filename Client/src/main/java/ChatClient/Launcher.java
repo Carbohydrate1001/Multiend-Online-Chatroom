@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+//Run this class to start a client
+//Set multiple instances allowed
 public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {

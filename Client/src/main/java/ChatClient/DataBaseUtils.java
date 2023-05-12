@@ -13,12 +13,13 @@ import java.io.IOException;
 
 public class DataBaseUtils {
     public static String Username;
-    //public static ClientHandler clientHandler;
+
+    //This method will change to login&register scene
     public static void changeLRScene(ActionEvent event, String fxmlFile, String title, String username) {
         Parent root = null;
-
         if (username != null) {
             try {
+                //Load corresponding fxml file
                 FXMLLoader fxmlLoader = new FXMLLoader(DataBaseUtils.class.getResource(fxmlFile));
                 root = fxmlLoader.load();
                 ClientController clientController = fxmlLoader.getController();
@@ -39,10 +40,12 @@ public class DataBaseUtils {
         stage.show();
     }
 
+    //This method will change to chat scene
     public static void changeChatScene(ActionEvent event, String fxmlFile, String title, String username) {
         Parent root = null;
         if (username != null) {
             try {
+                //Load corresponding fxml file
                 FXMLLoader fxmlLoader = new FXMLLoader(DataBaseUtils.class.getResource(fxmlFile));
                 root = fxmlLoader.load();
                 ClientController clientController = fxmlLoader.getController();
@@ -54,6 +57,7 @@ public class DataBaseUtils {
         }
         else {
             try {
+                //Load corresponding fxml file
                 root = FXMLLoader.load(DataBaseUtils.class.getResource(fxmlFile));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -79,6 +83,7 @@ public class DataBaseUtils {
         stage.show();
     }
 
+    //This method is to handle functions of the register system
     public static void register(ActionEvent Event, String username, String password, String passwordVri) {
         Connection connection = null;
         PreparedStatement PSInsert = null;
@@ -86,17 +91,21 @@ public class DataBaseUtils {
         ResultSet resultSet = null;
         String status = "Online";
         try {
+            //Set up connection with the database
             connection = DriverManager.getConnection("jdbc:mysql://localhost:41001/multichatfx", "root", "ctOssystemv.3" );
             PSCheckUserExist = connection.prepareStatement("SELECT * FROM users WHERE Username = ?");
             PSCheckUserExist.setString(1, username);
             resultSet = PSCheckUserExist.executeQuery();
 
+            //Check the user existence
             if (resultSet.isBeforeFirst()) {
                 System.out.println("User already exists.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("This username has been used");
                 alert.show();
             }
+
+            //Verify the password
             else if (!password.equals(passwordVri)) {
                 System.out.println(password);
                 System.out.println(passwordVri);
@@ -105,6 +114,8 @@ public class DataBaseUtils {
                 alert.setContentText("Passwords do not match.");
                 alert.show();
             }
+
+            //Register successfully
             else {
                 Username = username;
                 PSInsert = connection.prepareStatement("INSERT INTO users (Username, Password, Status) VALUES(?, ?, ?)");
@@ -116,11 +127,12 @@ public class DataBaseUtils {
                 alert.setContentText("Registered successfully.");
                 alert.show();
                 changeProfileScene(Event, "SetProfileUI.fxml", username);
-                //clientHandler.SendMessageToClient("SERVER: " + username + " has entered the chat!");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
+        }
+        //Close all the connection to database after used
+        finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
@@ -145,16 +157,20 @@ public class DataBaseUtils {
         }
     }
 
+    ////This method is to handle functions of the login system
     public static void LogInUser(ActionEvent Event, String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement PSUpdate = null;
         ResultSet resultSet = null;
         try {
+            //Set up connection with the database
             connection = DriverManager.getConnection("jdbc:mysql://localhost:41001/multichatfx", "root", "ctOssystemv.3" );
             preparedStatement = connection.prepareStatement("SELECT Password, Status, Nickname FROM users WHERE Username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
+
+            //Check whether the user exists
             if (!resultSet.isBeforeFirst()){
                 System.out.println("User is not found in this database.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -166,8 +182,13 @@ public class DataBaseUtils {
                     String retrievePassword = resultSet.getString("Password");
                     String retrieveStatus = resultSet.getString("Status");
                     String retrieveNickname = resultSet.getString("Nickname");
+
+                    //Password check
                     if (retrievePassword.equals(password)) {
+
+                        //Status check
                         if (retrieveStatus.equals("Offline")){
+                            //Login successfully
                             PSUpdate = connection.prepareStatement("UPDATE users SET Status = ? WHERE Username = ?");
                             PSUpdate.setString(1, "Online");
                             PSUpdate.setString(2, username);
@@ -193,7 +214,9 @@ public class DataBaseUtils {
             }
         } catch (SQLException e) {
              e.printStackTrace();
-        } finally {
+        }
+        //Close all the connection to database after used
+        finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
